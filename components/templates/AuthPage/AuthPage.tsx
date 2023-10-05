@@ -1,13 +1,15 @@
-import styles from '@/styles/auth/index.module.scss'
 import { MutableRefObject, useRef } from 'react'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import styles from '@/styles/auth/index.module.scss'
+import SignUpForm from '@/components/modules/AuthPage/SignUpForm'
 
 const AuthPage = () => {
+  const isMedia800 = useMediaQuery(800)
   const switchCtn = useRef() as MutableRefObject<HTMLDivElement>
   const switchC1 = useRef() as MutableRefObject<HTMLDivElement>
   const switchC2 = useRef() as MutableRefObject<HTMLDivElement>
   const switchCircle1 = useRef() as MutableRefObject<HTMLDivElement>
   const switchCircle2 = useRef() as MutableRefObject<HTMLDivElement>
-  const switchBtn = useRef() as MutableRefObject<HTMLDivElement>
   const aContainer = useRef() as MutableRefObject<HTMLDivElement>
   const bContainer = useRef() as MutableRefObject<HTMLDivElement>
 
@@ -33,57 +35,37 @@ const AuthPage = () => {
         id="a-container"
         ref={aContainer}
       >
-        <form className={styles.form}>
-          <h2 className={`${styles.form__title} ${styles.title}`}>
-            Create Account
-          </h2>
-          <input
-            className={styles.form__input}
-            type="text"
-            placeholder="Name"
-          />
-          <input
-            className={styles.form__input}
-            type="text"
-            placeholder="Email"
-          />
-          <input
-            className={styles.form__input}
-            type="password"
-            placeholder="Password"
-          />
-          <button
-            className={`${styles.form__button} ${styles.button} ${styles.submit}`}
-          >
-            SIGN UP
-          </button>
-        </form>
+        <div className={styles.container__inner}>
+          <SignUpForm switchForm={switchForm}/>
+        </div>
       </div>
       <div
         className={`${styles.container} ${styles.b_container}`}
         id="b-container"
         ref={bContainer}
       >
-        <form className={styles.form}>
-          <h2 className={`${styles.form__title} ${styles.title}`}>
-            Sign in to Website
-          </h2>
-          <input
-            className={styles.form__input}
-            type="text"
-            placeholder="Email"
-          />
-          <input
-            className={styles.form__input}
-            type="password"
-            placeholder="Password"
-          />
-          <button
-            className={`${styles.form__button} ${styles.button} ${styles.submit}`}
-          >
-            SIGN IN
-          </button>
-        </form>
+        <div className={styles.container__inner}>
+          <form className={styles.form}>
+            <h2 className={`${styles.form__title} ${styles.title}`}>
+              Увійдіть на веб-сайт
+            </h2>
+            <input
+              className={styles.form__input}
+              type="text"
+              placeholder="Email"
+            />
+            <input
+              className={styles.form__input}
+              type="password"
+              placeholder="Password"
+            />
+            <button
+              className={`${styles.form__button} ${styles.button} ${styles.submit}`}
+            >
+              SIGN IN
+            </button>
+          </form>
+        </div>
       </div>
       <div className={styles.switch} id="switch-cnt" ref={switchCtn}>
         <div className={styles.switch__circle} ref={switchCircle1} />
@@ -92,12 +74,18 @@ const AuthPage = () => {
           ref={switchCircle2}
         />
         <div className={styles.switch__container} id="switch-c1" ref={switchC1}>
-          <h2 className={`${styles.switch__title} ${styles.title}`}>
-            Welcome Back !
-          </h2>
-          <p className={`${styles.switch__description} ${styles.description}`}>
-            To keep connected with us please login with your personal info
-          </p>
+          {!isMedia800 && (
+            <>
+              <h2 className={`${styles.switch__title} ${styles.title}`}>
+                Ласкаво просимо!
+              </h2>
+              <p
+                className={`${styles.switch__description} ${styles.description}`}
+              >
+                Щоб залишатися з нами на зв'язку, автовізуйтесь на сайті
+              </p>
+            </>
+          )}
           <button
             onClick={switchForm}
             className={`${styles.switch__button} ${styles.button} ${styles.switch__btn}`}
@@ -110,12 +98,18 @@ const AuthPage = () => {
           id="switch-c2"
           ref={switchC2}
         >
-          <h2 className={`${styles.switch__title} ${styles.title}`}>
-            Hello Friend !
-          </h2>
-          <p className={`${styles.switch__description} ${styles.description}`}>
-            Enter your personal details and start journey with us
-          </p>
+          {!isMedia800 && (
+            <>
+              <h2 className={`${styles.switch__title} ${styles.title}`}>
+                Привіт друже!
+              </h2>
+              <p
+                className={`${styles.switch__description} ${styles.description}`}
+              >
+                введіть свої особисті дані та почніть перегляд сайту
+              </p>
+            </>
+          )}
           <button
             onClick={switchForm}
             className={`${styles.switch__button} ${styles.button} ${styles.switch__btn}`}
