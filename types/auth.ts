@@ -17,3 +17,9 @@ export interface ISignUpFx {
   password: string
   email: string
 }
+
+export interface ISignInFx {
+  url: string
+  username: string
+  password: string
+}

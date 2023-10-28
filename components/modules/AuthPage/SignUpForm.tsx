@@ -1,13 +1,16 @@
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import NameInput from '@/components/elements/AuthPage/NameInput'
 import { IInputs } from '@/types/auth'
-import styles from '@/styles/auth/index.module.scss'
 import EmailInput from '@/components/elements/AuthPage/EmailInput'
 import PasswordInput from '@/components/elements/AuthPage/PasswordInput'
 import { singUpFx } from '@/app/api/auth'
-import { toast } from 'react-toastify'
+import { showAuthError } from '@/utils/errors'
+import styles from '@/styles/auth/index.module.scss'
+import spinnerStyles from '@/styles/spinner/index.module.scss'
 
 const SignUpForm = ({ switchForm }: { switchForm: () => void }) => {
+  const [spinner, setSpinner] = useState(false)
   const {
     register,
     formState: { errors },
@@ -17,6 +20,7 @@ const SignUpForm = ({ switchForm }: { switchForm: () => void }) => {
 
   const onSubmit = async (data: IInputs) => {
     try {
+      setSpinner(true)
       const userData = await singUpFx({
         url: '/users/signup',
         username: data.name,
@@ -24,13 +28,18 @@ const SignUpForm = ({ switchForm }: { switchForm: () => void }) => {
         email: data.email,
       })
 
-      console.log(userData)
+      if (!userData) {
+        return
+      }
+
       resetField('email')
       resetField('name')
       resetField('password')
       switchForm()
     } catch (error) {
-      toast.error((error as Error).message)
+      showAuthError(error)
+    } finally {
+      setSpinner(false)
     }
   }
 
@@ -45,7 +54,7 @@ const SignUpForm = ({ switchForm }: { switchForm: () => void }) => {
       <button
         className={`${styles.form__button} ${styles.button} ${styles.submit}`}
       >
-        SIGN UP
+        {spinner ? <div className={spinnerStyles.spinner} /> : 'SIGN UP'}
       </button>
     </form>
   )

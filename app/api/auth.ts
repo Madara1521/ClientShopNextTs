@@ -1,5 +1,5 @@
 import { createEffect } from 'effector'
-import { ISignUpFx } from '../../types/auth'
+import { ISignInFx, ISignUpFx } from '../../types/auth'
 import api from '../axiosClient'
 import { toast } from 'react-toastify'
 
@@ -11,6 +11,17 @@ export const singUpFx = createEffect(
       toast.warning(data.warningMessage)
       return
     }
+
+    toast.success('Реєстрація пройшла успішно!')
+    return data
+  }
+)
+
+export const singInFx = createEffect(
+  async ({ url, username, password }: ISignInFx) => {
+    const { data } = await api.post(url, { username, password })
+
+    toast.success('Вхід виконано!')
     return data
   }
 )
