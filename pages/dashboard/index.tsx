@@ -12,7 +12,10 @@ function Dashboard() {
         <link rel="icon" type="image/svg" sizes="32x32" href="/img/logo.svg" />
       </Head>
       <Header />
-      <h1>Dashboard</h1>
+      <main>
+        <h1>Dashboard</h1>
+        <div className="overlay" />
+      </main>
     </>
   )
 }
