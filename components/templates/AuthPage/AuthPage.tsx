@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { MutableRefObject, useRef } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import styles from '@/styles/auth/index.module.scss'
