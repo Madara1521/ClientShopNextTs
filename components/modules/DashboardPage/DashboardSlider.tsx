@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Slider from 'react-slick'
+import Link from 'next/link'
 import { useStore } from 'effector-react'
 import { useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
@@ -7,10 +8,10 @@ import 'slick-carousel/slick/slick-theme.css'
 import { $mode } from '@/context/mode'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { IDashboardSlider } from '@/types/dashboard'
+import { formatPrice } from '@/utils/common'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
 import styles from '@/styles/dashboard/index.module.scss'
-import Link from 'next/link'
-import { formatPrice } from '@/utils/common'
+
 const DashboardSlider = ({
   items,
   spinner,
@@ -18,7 +19,6 @@ const DashboardSlider = ({
 }: IDashboardSlider) => {
   const isMedia768 = useMediaQuery(768)
   const isMedia1366 = useMediaQuery(1366)
-  const isMedia1030 = useMediaQuery(1030)
   const isMedia800 = useMediaQuery(800)
   const isMedia560 = useMediaQuery(560)
   const mode = useStore($mode)
@@ -43,7 +43,6 @@ const DashboardSlider = ({
     autoplay: true,
     speed: 500,
     arrows: false,
-    // slidesToShow: items.length >= 4 ? (isMedia1030 ? 3 : 4) : items.length - 1,
     slidesToScroll: isMedia768 ? 1 : 2,
   }
 
