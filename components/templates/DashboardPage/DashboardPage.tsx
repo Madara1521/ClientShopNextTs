@@ -18,7 +18,7 @@ const DashboardPage = () => {
   const [newShoes, setNewShoes] = useState<IShoeses>({} as IShoeses)
   const [bestsellers, setBestsellers] = useState<IShoeses>({} as IShoeses)
   const [spinner, setSpinner] = useState(false)
-  const [showAlert, setShowAlert] = useState(!!1)
+  const [showAlert, setShowAlert] = useState(!!shoppingCart.length)
 
   useEffect(() => {
     loadShoes()
