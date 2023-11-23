@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
+import CatalogItem from '@/components/modules/CatalogPage/CatalogItem'
 
 const CatalogPage = () => {
   const mode = useStore($mode)
@@ -19,8 +20,6 @@ const CatalogPage = () => {
   useEffect(() => {
     loadShoes()
   }, [])
-
-  console.log(shoes)
 
   const loadShoes = async () => {
     try {
@@ -42,13 +41,18 @@ const CatalogPage = () => {
         </h2>
         <div className={`${styles.catalog__top} ${darkModeClass}`}>
           <AnimatePresence>
-            <ManufacturersBlock title="Виробник взуття:" />
+            {false && <ManufacturersBlock title="Виробник взуття:" />}
           </AnimatePresence>
           <AnimatePresence>
-            <ManufacturersBlock title="Країна виробник:" />
+            {false && <ManufacturersBlock title="Країна виробник:" />}
           </AnimatePresence>
           <div className={styles.catalog__top__inner}>
-            <button>Очистити фільтр</button>
+            <button
+              className={`${styles.catalog__top__reset} ${darkModeClass}`}
+              disabled={true}
+            >
+              Очистити фільтр
+            </button>
             <FilterSelect />
           </div>
         </div>
@@ -57,9 +61,9 @@ const CatalogPage = () => {
             <div>Filters</div>
             {spinner ? (
               <ul className={skeletonStyles.skeleton}>
-                {Array.from(new Array(8)).map((item) => (
+                {Array.from(new Array(8)).map((_, i) => (
                   <li
-                    key={item}
+                    key={i}
                     className={`${skeletonStyles.skeleton__item} ${
                       mode === 'dark' ? `${skeletonStyles.dark_mode}` : ''
                     }`}
@@ -71,7 +75,9 @@ const CatalogPage = () => {
             ) : (
               <ul className={styles.catalog__list}>
                 {shoes.rows?.length ? (
-                  shoes.rows.map((item) => <li key={item.id} />)
+                  shoes.rows.map((item) => (
+                    <CatalogItem item={item} key={item.id} />
+                  ))
                 ) : (
                   <span>Список товарів порожній...</span>
                 )}
